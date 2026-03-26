@@ -1,26 +1,327 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Body / UI text — soft charcoal (Slite-style) */
+  --foreground: #2d2d33;
+  /* Friendly blue accent */
+  --era-accent: #5b8fd0;
+  --era-accent-hover: #4a7bc8;
+  /* Light blue for text/icons on dark video / footer */
+  --era-accent-on-dark: #a3c8ee;
+  --era-accent-on-dark-hover: #c0daf5;
+  /* Solid CTAs — charcoal pill + cream label */
+  --era-ink-hover: #25252c;
+  --era-dark: #0a0a0c;
+  --era-dark-soft: #121218;
+  --era-muted: #6b6b70;
+  --era-line: rgba(255, 255, 255, 0.08);
+  --era-surface: #f0ebe4;
+  /* Warm beige page base */
+  --era-cream: #f8f4f0;
+  --era-cream-deep: #efe8e2;
+  --era-ink: #2d2d33;
+  --era-void: #0a0a0a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--era-cream);
+  --color-foreground: var(--era-ink);
+  --color-era-accent: var(--era-accent);
+  --color-era-accent-hover: var(--era-accent-hover);
+  --color-era-accent-on-dark: var(--era-accent-on-dark);
+  --color-era-accent-on-dark-hover: var(--era-accent-on-dark-hover);
+  --color-era-ink-hover: var(--era-ink-hover);
+  --color-era-dark: var(--era-dark);
+  --color-era-dark-soft: var(--era-dark-soft);
+  --color-era-muted: var(--era-muted);
+  --color-era-line: var(--era-line);
+  --color-era-surface: var(--era-surface);
+  --color-era-cream: var(--era-cream);
+  --color-era-cream-deep: var(--era-cream-deep);
+  --color-era-ink: var(--era-ink);
+  --color-era-void: var(--era-void);
+  /* Legacy Tailwind names — map “gold” CTAs to blue accent */
+  --color-era-gold: var(--era-accent);
+  --color-era-gold-hover: var(--era-accent-hover);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-montserrat);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--era-cream);
+  color: var(--era-ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+}
+
+.section-y {
+  @apply py-16 md:py-24 lg:py-28;
+}
+
+.container-site {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 xl:max-w-7xl;
+}
+
+
+/* Radial glow for dark panels / cards */
+.glow-radial {
+  position: relative;
+}
+.glow-radial::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    rgba(91, 143, 208, 0.14),
+    transparent 55%
+  );
+}
+
+/* Film grain — lighter on dark sections only */
+.noise-overlay {
+  position: relative;
+}
+.noise-overlay::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.mesh-accent {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(91, 143, 208, 0.22), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(91, 143, 208, 0.09), transparent 45%),
+    radial-gradient(ellipse 50% 35% at 0% 80%, rgba(91, 143, 208, 0.07), transparent 40%);
+}
+
+.shadow-era-card {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 12px 32px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-era-card-hover {
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.04),
+    0 20px 48px rgba(0, 0, 0, 0.08);
+}
+
+/* Header nav — slide from left + up, fade in (stagger via inline animation-delay). */
+@keyframes header-nav-in {
+  from {
+    opacity: 0;
+    transform: translate(-0.65rem, 0.45rem);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+.header-nav-item-animated {
+  animation: header-nav-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-nav-item-animated {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Software CTA — solid dark base + radials only (no top linear fade vs Mid CTA white). */
+.software-cta-atmosphere {
+  position: absolute;
+  background-color: #0a0a0c;
+  background-image:
+    radial-gradient(ellipse 118% 88% at 84% 16%, rgba(99, 102, 241, 0.22), transparent 62%),
+    radial-gradient(ellipse 96% 76% at 24% 56%, rgba(91, 143, 208, 0.14), transparent 70%),
+    radial-gradient(ellipse 120% 95% at 50% 100%, rgba(42, 36, 62, 0.28), transparent 76%),
+    radial-gradient(ellipse 70% 55% at 60% 35%, rgba(255, 255, 255, 0.02), transparent 58%);
+}
+
+/* Keep one low-cost moving layer; avoid stacked blur+blend animation. */
+.software-cta-atmosphere::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -18%;
+  z-index: 0;
+  border-radius: 9999px;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  background:
+    radial-gradient(closest-side at 30% 30%, rgba(139, 92, 246, 0.24), transparent 62%),
+    radial-gradient(closest-side at 70% 42%, rgba(99, 102, 241, 0.18), transparent 66%);
+  filter: blur(28px);
+  opacity: 0.7;
+  animation: software-cta-liquid-1 20s ease-in-out infinite alternate;
+}
+
+@keyframes software-cta-liquid-1 {
+  0% {
+    transform: translate3d(-6%, -4%, 0) scale(1.03);
+  }
+  100% {
+    transform: translate3d(7%, 5%, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .software-cta-atmosphere::before {
+    animation: none;
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .software-cta-atmosphere::before {
+    animation: none;
+    transform: none;
+    filter: blur(20px);
+    opacity: 0.45;
+  }
+}
+
+/* Ratings strip — edge fade + endless horizontal marquee */
+@keyframes trusted-ratings-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.trusted-marquee {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+.trusted-ratings-marquee-track {
+  animation: trusted-ratings-marquee 38s linear infinite;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .trusted-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .trusted-ratings-marquee-track {
+    animation-duration: 52s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trusted-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .trusted-ratings-marquee-track {
+    animation: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100% !important;
+    max-width: 48rem;
+    margin-inline: auto;
+    row-gap: 0.75rem;
+  }
+
+  .trusted-ratings-marquee-track > div:last-child {
+    display: none;
+  }
+
+  .trusted-ratings-marquee-track > div:first-child {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.75rem;
+    padding-right: 0;
+  }
+}
+
+/* Services (and similar): whisper of depth; keep top band clean, stronger glow mid → bottom */
+.hero-orb {
+  background-image:
+    radial-gradient(circle at 18% 42%, rgba(91, 143, 208, 0.03), transparent 42%),
+    radial-gradient(circle at 82% 38%, rgba(45, 45, 51, 0.018), transparent 40%);
+}
+
+/* Scroll reveal — slide up + fade */
+.reveal-on-scroll-hidden {
+  opacity: 0;
+  transform: translateY(1.75rem);
+}
+
+.reveal-on-scroll-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Text reveal variant: cleaner fade, no slide */
+.reveal-fade.reveal-on-scroll-hidden {
+  opacity: 0;
+  transform: none;
+}
+
+.reveal-fade.reveal-on-scroll-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Card reveal variant: stronger bottom-up lift */
+.reveal-card.reveal-on-scroll-hidden {
+  opacity: 0;
+  transform: translateY(2.25rem) scale(0.985);
+}
+
+.reveal-card.reveal-on-scroll-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll-hidden {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal-on-scroll-visible {
+    transition: none;
+  }
 }

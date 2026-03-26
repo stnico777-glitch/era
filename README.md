@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Era Solutions marketing site
 
-## Getting Started
+Next.js (App Router) marketing site for Era Solutions: leadflow, conversion solutions, and software for service-based businesses.
 
-First, run the development server:
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Configuration
 
-To learn more about Next.js, take a look at the following resources:
+Update company details in [`lib/site.ts`](lib/site.ts) (phone, email, address line, social URLs).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Stock photography URLs live in [`lib/visuals.ts`](lib/visuals.ts); replace with your own assets and keep [`next.config.ts`](next.config.ts) `images.remotePatterns` in sync if you use a new host.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The hero rotates background videos (see `heroVideos` in [`lib/visuals.ts`](lib/visuals.ts)) with a poster still fallback (`visuals.hero`). Edit clip list/timing in [`components/HeroBackground.tsx`](components/HeroBackground.tsx) (`DEFAULT_DISPLAY_MS` and per-clip `displayMs`).
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Wordmark is rendered from inline SVG in [`components/Logo.tsx`](components/Logo.tsx).
