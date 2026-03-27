@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { InnerPageHero } from "@/components/InnerPageHero";
 import { ContactForm } from "@/components/ContactForm";
+import { CalendlyInline } from "@/components/CalendlyInline";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -112,6 +113,9 @@ export default function ContactPage() {
                 <ContactForm />
               </div>
             </div>
+          </div>
+          <div className="mx-auto mt-8 max-w-6xl md:mt-10">
+            <CalendlyInline url={site.calendlyUrl} />
           </div>
 
           <section className="mt-12 md:mt-16">

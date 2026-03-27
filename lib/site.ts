@@ -5,7 +5,9 @@ export const site = {
     "Era Solutions builds high-converting websites, leadflow solutions, and software that help service businesses capture more demand and turn it into revenue.",
   phoneDisplay: "954-682-4639",
   phoneTel: "+19546824639",
-  calendlyUrl: "https://calendly.com/era-solutions/book-now",
+  calendlyUrl:
+    process.env.NEXT_PUBLIC_CALENDLY_URL ??
+    "https://calendly.com/nico-scalewithera/30min",
   email: "nico@scalewithera.com",
   careersEmail: "careers@scalewithera.com",
   addressLine: "Based in Miami",

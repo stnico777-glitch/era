@@ -1,9 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Logo } from "@/components/Logo";
 import { site, services } from "@/lib/site";
 
 const nav = [
@@ -74,29 +74,39 @@ export function Header() {
     <header
       key={pathname}
       className={cn(
-        "sticky top-0 z-50 transition-[background-color,box-shadow,border-color,backdrop-filter] duration-300 ease-out",
+        "sticky top-0 z-50 overflow-visible transition-[background-color,box-shadow,border-color,backdrop-filter] duration-300 ease-out",
         overHero
           ? "border-transparent bg-transparent shadow-none backdrop-blur-none"
           : "border-b border-black/[0.06] bg-[#F8EFE5] shadow-sm shadow-black/[0.03]",
       )}
     >
-      <div className="container-site flex h-16 items-center justify-between gap-4 md:h-20">
-        <Link
-          href="/"
-          className="flex shrink-0 items-center"
-          aria-label="ERA Solutions home"
-        >
-          <Logo
-            priority
-            variant={overHero ? "overlay" : "header"}
-            wordmark="era-solutions"
-          />
-        </Link>
+      <div className="container-site flex h-16 items-center justify-between gap-4 overflow-visible md:h-20">
+        <div className="flex min-w-0 items-center gap-3 lg:gap-5">
+          <Link
+            href="/"
+            className="relative z-0 flex shrink-0 items-center overflow-visible"
+            aria-label="ERA home"
+          >
+            <span className="relative block h-10 w-[200px] md:h-12 md:w-[260px]">
+              <Image
+                src="/images/era-wordmark.png"
+                alt=""
+                fill
+                className={cn(
+                  "origin-left scale-[1.8] object-contain object-left",
+                  overHero &&
+                    "brightness-0 invert mix-blend-screen",
+                )}
+                sizes="(min-width: 768px) 520px, 400px"
+                priority
+              />
+            </span>
+          </Link>
 
-        <nav
-          className="hidden items-center gap-1 lg:flex"
-          aria-label="Main"
-        >
+          <nav
+            className="relative z-10 hidden items-center gap-1 lg:flex"
+            aria-label="Main"
+          >
           {/* Home first */}
           <Link
             href={nav[0].href}
@@ -185,9 +195,10 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-        </nav>
+          </nav>
+        </div>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="relative z-10 hidden items-center gap-3 md:flex">
           <Link
             href="/contact"
             className={cn(
@@ -201,30 +212,16 @@ export function Header() {
             Search
           </Link>
           <a
-            href={site.calendlyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              "header-nav-item-animated inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm transition-colors",
-              overHero
-                ? "bg-white text-era-ink hover:bg-white/90"
-                : "bg-era-ink text-era-cream hover:bg-era-ink-hover",
-            )}
-            style={navAnimDelay(nav.length + 2)}
-          >
-            Book Now
-          </a>
-          <a
             href={`tel:${site.phoneTel}`}
             className={cn(
               "header-nav-item-animated hidden items-center gap-2 text-sm font-semibold lg:inline-flex",
               overHero ? "text-white" : "text-era-ink",
             )}
-            style={navAnimDelay(nav.length + 3)}
+            style={navAnimDelay(nav.length + 2)}
           >
             <PhoneIcon
               className={cn(
-                "h-4 w-4",
+                "h-6 w-6 shrink-0",
                 overHero ? "text-era-accent-on-dark" : "text-era-accent",
               )}
             />
@@ -235,7 +232,7 @@ export function Header() {
         <button
           type="button"
           className={cn(
-            "inline-flex items-center justify-center rounded-lg p-2 lg:hidden",
+            "relative z-10 inline-flex items-center justify-center rounded-lg p-2 lg:hidden",
             overHero ? "text-white" : "text-era-ink",
           )}
           aria-expanded={open}
@@ -282,18 +279,10 @@ export function Header() {
             </Link>
             <div className="mt-4 flex flex-col gap-3 border-t border-black/5 pt-4">
               <a
-                href={site.calendlyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-era-ink px-5 py-3 text-center text-sm font-semibold text-era-cream"
-              >
-                Book Now
-              </a>
-              <a
                 href={`tel:${site.phoneTel}`}
                 className="flex items-center justify-center gap-2 text-sm font-semibold"
               >
-                <PhoneIcon className="h-4 w-4 text-era-accent" />
+                <PhoneIcon className="h-5 w-5 shrink-0 text-era-accent" />
                 Call {site.phoneDisplay}
               </a>
             </div>
