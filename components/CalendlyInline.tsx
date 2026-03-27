@@ -37,7 +37,7 @@ function isCalendlyBookingUrl(value: string) {
 export function CalendlyInline({
   url,
   title = "Book a strategy call",
-  minHeight = 380,
+  minHeight = 608,
 }: CalendlyInlineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scriptReady, setScriptReady] = useState(() =>
@@ -69,25 +69,25 @@ export function CalendlyInline({
   return (
     <section
       aria-label={title}
-      className="mx-auto max-w-md rounded-2xl border border-black/[0.06] bg-white p-2.5 shadow-era-card md:p-3"
+      className="w-full rounded-3xl border border-black/[0.06] bg-white p-4 shadow-era-card md:p-6"
     >
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
         strategy="lazyOnload"
         onLoad={() => setScriptReady(true)}
       />
-      <p className="text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-era-accent md:text-[11px]">
+      <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-era-accent">
         Book a call
       </p>
-      <h2 className="mt-1.5 text-center font-display text-base font-bold tracking-tight text-era-ink md:text-lg">
+      <h2 className="mt-2 text-center font-display text-xl font-bold tracking-tight text-era-ink md:text-2xl">
         {title}
       </h2>
-      <p className="mx-auto mt-1 max-w-2xl text-center text-[11px] leading-snug text-era-muted md:text-xs">
+      <p className="mx-auto mt-2 max-w-2xl text-center text-sm leading-relaxed text-era-muted">
         Pick a time that works for you and we&apos;ll walk through your growth
         goals.
       </p>
       {showPlaceholder ? (
-        <p className="mx-auto mt-3 max-w-lg rounded-xl border border-dashed border-era-ink/20 bg-era-cream/60 px-3 py-3 text-center text-[11px] text-era-muted md:text-xs">
+        <p className="mx-auto mt-6 max-w-lg rounded-2xl border border-dashed border-era-ink/20 bg-era-cream/60 px-5 py-5 text-center text-sm text-era-muted">
           Add your Calendly scheduling link: set{" "}
           <code className="rounded bg-white px-1.5 py-0.5 font-mono text-xs text-era-ink">
             NEXT_PUBLIC_CALENDLY_URL
@@ -101,8 +101,8 @@ export function CalendlyInline({
       ) : (
         <div
           ref={containerRef}
-          className="mt-3 w-full"
-          style={{ minWidth: "min(100%, 280px)", minHeight: `${minHeight}px` }}
+          className="mt-6 w-full"
+          style={{ minWidth: "min(100%, 320px)", minHeight: `${minHeight}px` }}
         />
       )}
     </section>
