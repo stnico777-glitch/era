@@ -23,18 +23,18 @@ const leverageItems = [
   },
   {
     id: "pipeline",
-    shortLabel: "Solutions",
+    shortLabel: "Systems",
     icon: "pipeline",
-    title: "Lead management solutions",
+    title: "Lead management systems",
     pain:
       "Without a real pipeline, leads get lost, forgotten, or assigned to the wrong follow-up owner.",
     bullets: ["Pipeline + lead ownership", "Lead intake + tracking", "Reminders so nothing dies"],
   },
   {
     id: "convert",
-    shortLabel: "Conversions",
+    shortLabel: "Conversion",
     icon: "spark",
-    title: "Automations that drive conversions + reviews",
+    title: "Automations that drive conversion + reviews",
     pain:
       "Slow follow-up and weak proof kills conversion (and hurts your local rankings).",
     bullets: ["Automated follow-up", "Automated reviews (Google proof)", "Conversion-focused website strategy"],
